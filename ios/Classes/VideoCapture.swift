@@ -61,7 +61,7 @@ class VideoCapture: NSObject, @unchecked Sendable {
   var shortSide: CGFloat = 4
   var frameSizeCaptured = false
 
-  private var currentBuffer: CVPixelBuffer?
+  public private(set) var currentBuffer: CVPixelBuffer?
 
   func setUp(
     sessionPreset: AVCaptureSession.Preset = .hd1280x720,
@@ -290,6 +290,7 @@ extension VideoCapture: ResultsListener, InferenceTimeListener {
   func on(result: YOLOResult) {
     DispatchQueue.main.async {
       self.delegate?.onPredict(result: result)
+      self.currentBuffer = nil
     }
   }
 }
