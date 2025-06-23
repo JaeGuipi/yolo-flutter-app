@@ -36,6 +36,9 @@ public class YOLOView: UIView, VideoCaptureDelegate {
       print("YOLOView: Skipping inference result due to frequency control")
       return
     }
+    if let buffer = videoCapture.currentBuffer {
+      self.currentBuffer = buffer
+    }
 
     showBoxes(predictions: result)
     onDetection?(result)
